@@ -1,0 +1,7 @@
+LIB_A -> LIB_B
+LIB_M/1.0@conan/stable -> LIB_J
+LIB_A ~> BR1
+LIB_E -> LIB_A
+LIB_F -> LIB_A
+PROJECT -> LIB_E
+PROJECT -> LIB_F
