@@ -1,4 +1,6 @@
+import argparse
 import os
+import platform
 import tempfile
 from collections import defaultdict
 from contextlib import contextmanager
@@ -140,9 +142,14 @@ def process(path_file):
         t = tempfile.mkdtemp()
         for node in nodes:
             process_node(node, requires, build_requires, visited, workdir)
-    print("export CONAN_USER_HOME=%s && cd %s" % (cache_dir, workdir))
+
+    export = "export" if platform.system() != "Windows" else "SET"
+    print("\n\n%s CONAN_USER_HOME=%s && cd %s\n\n" % (export, cache_dir, workdir))
 
 if __name__ == "__main__":
-    process("nodes.conan")
+    parser = argparse.ArgumentParser(description='Generate the packages in a local cache')
+    parser.add_argument('graph_file', help='nodes.conan')
+    args = parser.parse_args()
+    process(args.graph_file)
 
 
